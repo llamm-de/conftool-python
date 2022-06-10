@@ -49,7 +49,7 @@ class ConfToolAPI:
             url += custom_query
 
         # call api
-        data = self.call_api(url)
+        data = self._call_api(url)
 
         return data
 
@@ -66,7 +66,7 @@ class ConfToolAPI:
         url = (f"{self.base_url}?page=remoteLogin&user={identifier}&command=request")
 
         # call api
-        data = self.call_api(url)
+        data = self._call_api(url)
 
         return data
 
@@ -78,11 +78,11 @@ class ConfToolAPI:
                f"&command=login&password={password}")
 
         # call api
-        data = self.call_api(url)
+        data = self._call_api(url)
 
         return data
 
-    def call_api(self, url):
+    def _call_api(self, url):
         """
         Call the API, check response and return data
         """
@@ -105,26 +105,6 @@ class ConfToolAPI:
             raise RuntimeError(f'Fetching API did not work: {data["rest"]["message"]}')
 
         return data
-
-    def _assemble_url(self, passhash, data_endpoint, include_deleted, custom_query):
-        """
-        Assembling the url for API request using passhash and queries
-        """
-        url = f"{self.base_url}?nonce={self.last_nonce}&passhash={passhash}"
-
-        if include_deleted:
-            deleted_flag = 1
-        else:
-            deleted_flag = 0
-        
-        url = (f"{url}&page=adminExport&export_select={data_endpoint}"
-               f"&form_include_deleted={deleted_flag}&form_export_format=xml"
-               f"&form_export_header=default&cmd_create_export=true")
-
-        if custom_query:
-            url += custom_query
-
-        return url
 
     def __repr__(self) -> str:
        return f"<ConfToolAPI object: {self.base_url}>"
