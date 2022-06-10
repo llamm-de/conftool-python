@@ -1,0 +1,13 @@
+.venv
+
+__pycache__
+
+.pytest_cache
+coverage.xml
+.coverage
+
+.env
+
+.vscode
+
+test.py
