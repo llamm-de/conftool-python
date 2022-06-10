@@ -3,7 +3,7 @@ import time
 import requests
 import xmltodict
 
-class ConfToolAPI:
+class APIHandler:
     """
     A simple class for handling API requests to conftool.org API.
     """

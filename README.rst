@@ -17,9 +17,9 @@ After installing the conftool package, you can retrieve data
 from the official ConfTool API, e.g. 
 ::
 
-    from conftool import ConfToolAPI
+    from ConfToolAPI import APIHandler
     
-    api = ConfToolAPI("your_endpoint_name", "your_api_key")
+    api = APIHandler("your_endpoint_name", "your_api_key")
 
     users = api.get_users()
 
