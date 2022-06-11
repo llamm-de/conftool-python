@@ -9,7 +9,7 @@ class APIHandler:
     A simple class for handling API requests to conftool.org API.
     """
 
-    def __init__(self, endpoint_name: str, api_key: str, initial_nonce: str = None) -> None:
+    def __init__(self, endpoint_name: str, api_key: str, initial_nonce: int = None) -> None:
         """
         Constructor for APIHandler
         """
@@ -27,8 +27,8 @@ class APIHandler:
         Overloading of constructor for using .env files to create new object
         """
         config = dotenv_values(env_file_name)
-        if "Initial nonce" in config:
-            return cls(config["ENDPOINT_NAME"], config["API_KEY"], initial_nonce=config["Initial nonce"])
+        if "INITIAL_NONCE" in config:
+            return cls(config["ENDPOINT_NAME"], config["API_KEY"], initial_nonce=int(config["INITIAL_NONCE"]))
         else: 
             return cls(config["ENDPOINT_NAME"], config["API_KEY"])
 
