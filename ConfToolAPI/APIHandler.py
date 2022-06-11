@@ -8,7 +8,7 @@ class APIHandler:
     A simple class for handling API requests to conftool.org API.
     """
 
-    def __init__(self, endpoint_name, api_key, initial_nonce=None) -> None:
+    def __init__(self, endpoint_name: str, api_key: str, initial_nonce: str = None) -> None:
         """
         Constructor for APIHandler
         """
@@ -20,7 +20,7 @@ class APIHandler:
         else:
             self.last_nonce = int(time.time() * 10000)
 
-    def _create_passhash(self):
+    def _create_passhash(self) -> str:
         """
         Create API passhash according to the documentation at https://www.conftool.net/ctforum/index.php/topic,280.0.html
         """
@@ -30,7 +30,7 @@ class APIHandler:
 
         return passhash
 
-    def admin_export(self, datafield, include_deleted=False, custom_query=None):
+    def admin_export(self, datafield: str, include_deleted: bool = False, custom_query: str =None) -> dict:
         """
         Retrieve data from adminExport endpoint of ConfTool API
         """
@@ -53,13 +53,13 @@ class APIHandler:
 
         return data
 
-    def get_users(self, include_deleted=False, custom_query=None):
+    def get_users(self, include_deleted: bool = False, custom_query: str = None) -> dict:
         """
         Convenience wrapper for get list of users
         """
         return self.admin_export("users", include_deleted, custom_query)
 
-    def get_user_details(self, identifier):
+    def get_user_details(self, identifier: str) -> dict:
         """
         Get data of a single user identified by username or email
         """
@@ -70,7 +70,7 @@ class APIHandler:
 
         return data
 
-    def check_login(self, identifier, password):
+    def check_login(self, identifier: str, password: str) -> dict:
         """
         Check if a user identified by username or mail can log in with given password
         """
@@ -82,7 +82,7 @@ class APIHandler:
 
         return data
 
-    def _call_api(self, url):
+    def _call_api(self, url: str) -> dict:
         """
         Call the API, check response and return data
         """
