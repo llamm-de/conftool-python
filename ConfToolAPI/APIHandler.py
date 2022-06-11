@@ -2,6 +2,7 @@ import hashlib
 import time
 import requests
 import xmltodict
+from dotenv import dotenv_values
 
 class APIHandler:
     """
@@ -19,6 +20,17 @@ class APIHandler:
             self.last_nonce = initial_nonce
         else:
             self.last_nonce = int(time.time() * 10000)
+
+    @classmethod
+    def from_dotenv(cls, env_file_name: str) -> 'APIHandler':
+        """
+        Overloading of constructor for using .env files to create new object
+        """
+        config = dotenv_values(env_file_name)
+        if "Initial nonce" in config:
+            return cls(config["ENDPOINT_NAME"], config["API_KEY"], initial_nonce=config["Initial nonce"])
+        else: 
+            return cls(config["ENDPOINT_NAME"], config["API_KEY"])
 
     def _create_passhash(self) -> str:
         """
