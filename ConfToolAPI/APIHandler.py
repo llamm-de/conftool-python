@@ -3,6 +3,7 @@ import time
 import requests
 import xmltodict
 from dotenv import dotenv_values
+from urllib.request import urlretrieve as shitty_wget
 
 class APIHandler:
     """
@@ -64,6 +65,24 @@ class APIHandler:
         data = self._call_api(url)
 
         return data
+
+    def download_paper(self, form_id: int, filename: str) -> bool:
+        """
+        Download a file
+        """
+        
+        url = self.base_url
+        url += f"?page=downloadPaper"
+        url += f"&form_id={form_id}"
+        url += f"&passhash={self._create_passhash()}"  # this sets self.last_nonce to the right nonce
+        url += f"&nonce={self.last_nonce}"
+
+        try:
+            shitty_wget( url, filename )
+        except:
+            return False
+        
+        return True
 
     def get_users(self, include_deleted: bool = False, custom_query: str = None) -> dict:
         """
